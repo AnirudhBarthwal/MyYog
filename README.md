@@ -1,4 +1,4 @@
-# Shailesh Barthwal - personal yoga website
+# YogMarg Rishikesh - yoga website
 
 A responsive, static website introducing Shailesh Barthwal as a yoga teacher,
 breath facilitator, and meditation coach, with a B.Sc. and M.Sc. in Yoga Science.
@@ -11,6 +11,8 @@ fonts, analytics, or third-party image services.
   and contact status.
 - `site/styles.css`: responsive layout and visual design.
 - `site/script.js`: accessible mobile navigation and current copyright year.
+- `site/sitemap.xml`: XML sitemap containing the canonical homepage only.
+- `site/robots.txt`: crawler access rules and the public sitemap URL.
 - `site/assets/`: local SVG portrait placeholder and favicon.
 - `site/_headers`: Cloudflare Pages response headers.
 
@@ -29,8 +31,8 @@ when deployed, not by this local preview server.
 ## Update content
 
 Edit `site/index.html` to change the biography and wording. The current content
-does not assume a location, class timetable, experience duration, client reviews,
-or class availability.
+introduces YogMarg Rishikesh without inventing a street address, class timetable,
+experience duration, client reviews, or class or retreat availability.
 
 To add a portrait, put your image in `site/assets/` and update the hero image
 `src`, `alt`, `width`, and `height` in `site/index.html`. Remove the `photo-label`
@@ -74,7 +76,14 @@ or private information into the repository.
 5. Deploy. Future pushes to `main` will trigger deployments.
 
 Only the `site` directory is published, keeping project documentation and IDE
-files out of the website.
+files out of the website. With this documented Pages output directory,
+`site/sitemap.xml` and `site/robots.txt` are served at `/sitemap.xml` and
+`/robots.txt`, not under `/site/`.
+
+There is no Worker source, Wrangler configuration, or static-asset binding
+configuration in this repository. If the live deployment uses a separate Worker
+rather than this Pages setup, its routing and asset directory must be checked
+in that deployment; this repository alone cannot confirm those settings.
 
 ## Domain and Google indexing
 
@@ -82,14 +91,32 @@ Register your chosen available domain separately, then add it under the Pages
 project's custom domains and complete Cloudflare's DNS instructions. Wait for
 the domain and HTTPS certificate to become active before sharing it.
 
-Once the final public domain is selected:
+The canonical public homepage is `https://yogmargrishikesh.com/`.
+The HTML includes the requested brand title, meta description, canonical link,
+Open Graph metadata, and Schema.org JSON-LD for the organization, website, and
+homepage. Structured data does not assert a business address, phone number,
+reviews, ratings, or unverified credentials. A generic `Organization` is used
+instead of an address-dependent local-business listing.
 
-1. Add its canonical URL and `og:url` in `site/index.html`.
-2. Add a sitemap using the final HTTPS URL, plus a `robots.txt` referencing it.
-3. Verify the domain in Google Search Console and submit the sitemap.
-4. Request indexing of the homepage.
+The sitemap lists only the homepage because the other navigation destinations
+are sections of that page, not separate pages. Add URLs only when new public
+pages actually exist. Keep canonical, Open Graph, JSON-LD, sitemap, and robots
+URLs consistent if the production domain changes.
+
+Open Graph image metadata is intentionally omitted: the only current content
+image is a portrait placeholder, not a real business or social-sharing photo.
+Once a suitable public photo is supplied, add an absolute HTTPS `og:image`
+URL and descriptive `og:image:alt` metadata.
+
+After deployment:
+
+1. Confirm `/sitemap.xml` returns XML and `/robots.txt` returns plain text,
+   not a homepage fallback.
+2. Verify the domain in Google Search Console and submit
+   `https://yogmargrishikesh.com/sitemap.xml`.
+3. Request indexing of the homepage.
 
 The site has a descriptive title, meta description, semantic headings, and
 crawlable HTML without requiring JavaScript. Google indexing is not automatic
-or guaranteed. No domain-specific URLs or ownership-verification tokens have
-been invented.
+or guaranteed. Ownership-verification tokens must come from your own Search
+Console account.
